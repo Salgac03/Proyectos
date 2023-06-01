@@ -1,0 +1,258 @@
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:45	    Page 1
+cesar.asm
+
+
+
+      1	0000			     CODIGO SEGMENT
+      2				     ASSUME CS : CODIGO
+      3
+      4					 ORG 100h
+      5
+      6	0100  E9 0133			 START:	JMP COMPROBADOR
+      7
+      8	0103  64*(00)			 MENSAJE_FINAL DB 100 DUP(0)
+      9
+     10	0167  49 4E 53 54 41 4C	41+	 INSTALADO DB "INSTALACION COMPLETADA",13,10,'$'
+     11	      43 49 4F 4E 20 43	4F+
+     12	      4D 50 4C 45 54 41	44+
+     13	      41 0D 0A 24
+     14	0180  44 45 53 49 4E 53	54+	 DESINSTALADO DB "DESINSTALACION COMPLETADA",13,10,'$'
+     15	      41 4C 41 43 49 4F	4E+
+     16	      20 43 4F 4D 50 4C	45+
+     17	      54 41 44 41 0D 0A	24
+     18	019C  49 6E 74 72 6F 64	75+	 FORMATO_ERRONEO DB "Introduzca	tras un	espacio	/I para	instalar o /D para desinstalar",13, +
+     19	      7A 63 61 20 74 72	61+  10,'$'
+     20	      73 20 75 6E 20 65	73+
+     21	      70 61 63 69 6F 20	2F+
+     22	      49 20 70 61 72 61	20+
+     23	      69 6E 73 74 61 6C	61+
+     24	      72 20 6F 20 2F 44	20+
+     25	      70 61 72 61 20 64	65+
+     26	      73 69 6E 73 74 61	6C+
+     27	      61 72 0D 0A 24
+     28
+     29
+     30	01E0				 CESAR PROC FAR
+     31
+     32	01E0  80 FC 11				 CMP AH, 11h
+     33	01E3  74 05				 JE CODIFICAR
+     34
+     35	01E5  80 FC 22				 CMP AH, 22h
+     36	01E8  74 06				 JE DECODIFICAR
+     37
+     38	01EA				     CODIFICAR:
+     39	01EA  E8 000A				 CALL CODIFICADOR
+     40	01ED  EB 07 90				 JMP FIN_CES
+     41	01F0				     DECODIFICAR:
+     42	01F0  E8 0042				 CALL DECODIFICADOR
+     43	01F3  EB 01 90				 JMP FIN_CES
+     44
+     45	01F6				     FIN_CES:
+     46	01F6  CF				 IRET
+     47	01F7				 CESAR ENDP
+     48
+     49	01F7				 CODIFICADOR PROC
+     50	01F7  50 53 51			     PUSH AX BX	CX
+     51
+     52	01FA  8B F2			     MOV SI, DX
+     53	01FC  BF 0103r			     MOV DI, OFFSET MENSAJE_FINAL
+     54
+     55	01FF  8A D8			     MOV BL, AL
+     56
+     57					     ;Guardamos	el numero de elementos del Abecedario en CL
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:45	    Page 2
+cesar.asm
+
+
+
+     58	0201  B1 5A			     MOV CL, 'Z'
+     59	0203  80 E9 41			     SUB CL, 'A'
+     60	0206  FE C1			     INC CL
+     61
+     62	0208  EB 16 90			     JMP BUC
+     63
+     64	020B				     COD:
+     65	020B  8A 3C				 MOV BH, DS:[SI] ;Guardamos la letra en	BH
+     66	020D  02 FB				 ADD BH, BL ;Le	sumamos	la rotación
+     67	020F  B4 00				 MOV AH, 0
+     68	0211  8A C7				 MOV AL, BH ;Movemos a AL la letra con la rotación sumada, con	el fin de usar div
+     69	0213  2C 41				 SUB AL, 'A';Le	restamos a AL la letra A para que nos quede la posición de nuestra +
+     70				     nueva letra (entre	BL y 25+BL)
+     71	0215  F6 F1				 DIV CL	;Dividimos para	poder usar las letras como una cola circular entre 0 y 25
+     72
+     73	0217  B7 41				 MOV BH, 'A' ;Movemos a	BH A
+     74	0219  02 FC				 ADD BH, AH ;Le	sumamos	la posición de	la letra en la cola circular para que sea la+
+     75				     letra A + posición
+     76							    ;Esta posición es el resto	de la división	anterior y se guarda	    +
+     77				     automáticamente en AH
+     78
+     79	021B  2E: 88 3D				 MOV CS:[DI], BH
+     80	021E  46				 INC SI
+     81	021F  47				 INC DI
+     82	0220				     BUC:
+     83	0220  80 3C 24				 CMP BYTE PTR DS:[SI], '$'
+     84	0223  75 E6				 JNE COD
+     85
+     86	0225  8A 3C			     MOV BH, DS:[SI]
+     87	0227  2E: 88 3D			     MOV CS:[DI], BH
+     88
+     89	022A  8C C8			     MOV AX, CS
+     90	022C  8E D8			     MOV DS, AX
+     91
+     92	022E  BA 0103r			     MOV DX, OFFSET MENSAJE_FINAL
+     93
+     94	0231  59 5B 58			     POP CX BX AX
+     95	0234  C3			     RET
+     96	0235				 CODIFICADOR ENDP
+     97
+     98	0235				 DECODIFICADOR PROC
+     99
+    100	0235  C3			     RET
+    101	0236				 DECODIFICADOR ENDP
+    102
+    103	0236				 COMPROBADOR PROC
+    104
+    105	0236  50 51 53				 PUSH AX CX BX
+    106
+    107	0239  B0 03				 MOV AL, 3
+    108	023B  BB 0080				 MOV BX, 80h
+    109	023E  8A 0F				 MOV CL, [BX]
+    110	0240  3A C1				 CMP AL, CL
+    111	0242  75 29				 JNE ERROR_FORMATO
+    112
+    113	0244  83 C3 02				 ADD BX, 02h
+    114	0247  B1 2F				 MOV CL, '/'
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:45	    Page 3
+cesar.asm
+
+
+
+    115	0249  8A 07				 MOV AL, [BX]
+    116	024B  3A C1				 CMP AL, CL
+    117	024D  75 1E				 JNE ERROR_FORMATO
+    118
+    119	024F  43				 INC BX
+    120	0250  8A 07				 MOV AL, [BX]
+    121	0252  B1 49				 MOV CL, 'I'
+    122	0254  3A C1				 CMP AL, CL
+    123	0256  74 09				 JE INSTALAR
+    124
+    125	0258  B1 44				 MOV CL, 'D'
+    126	025A  3A C1				 CMP AL, CL
+    127	025C  74 09				 JE DESINSTALAR
+    128
+    129	025E  EB 0D 90				 JMP ERROR_FORMATO
+    130
+    131	0261				     INSTALAR:
+    132	0261  E8 003B				 CALL INSTALADOR
+    133	0264  EB 0E 90				 JMP FIN
+    134	0267				     DESINSTALAR:
+    135	0267  E8 000E				 CALL DESINSTALADOR
+    136	026A  EB 08 90				 JMP FIN
+    137
+    138	026D				     ERROR_FORMATO:
+    139	026D  B4 09				 MOV AH, 09h
+    140	026F  BA 019Cr				 MOV DX, OFFSET	FORMATO_ERRONEO
+    141	0272  CD 21				 INT 21h
+    142	0274				     FIN:
+    143	0274  5B 59 58				 POP BX	CX AX
+    144	0277  C3				 RET
+    145
+    146	0278				 COMPROBADOR ENDP
+    147
+    148	0278				 DESINSTALADOR PROC
+    149
+    150	0278  33 C0			     XOR AX, AX
+    151	027A  8E C0			     MOV ES, AX
+    152
+    153	027C  FA			     CLI
+    154	027D  26: A3 0154			 MOV ES:[55h*4], AX
+    155	0281  26: A3 0156			 MOV ES:[55h*4+2], AX
+    156	0285  FB			     STI
+    157
+    158	0286  2E: 8E 06	002C		     MOV ES, CS:[2Ch]
+    159	028B  B4 49			     MOV AH, 49h
+    160	028D  CD 21			     INT 21h
+    161
+    162	028F  8C C8			     MOV AX, CS
+    163	0291  8E C0			     MOV ES, AX
+    164	0293  B4 49			     MOV AH, 49h
+    165	0295  CD 21			     INT 21h
+    166
+    167	0297  BA 0180r			     MOV DX, OFFSET DESINSTALADO
+    168	029A  B4 09			     MOV AH, 09h
+    169	029C  CD 21			     INT 21h
+    170
+    171	029E  C3			     RET
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:45	    Page 4
+cesar.asm
+
+
+
+    172
+    173	029F				 DESINSTALADOR ENDP
+    174
+    175	029F				 INSTALADOR PROC
+    176	029F  B8 0000			     MOV AX, 0
+    177	02A2  8E C0			     MOV ES, AX
+    178	02A4  B8 01E0r			     MOV AX, OFFSET CESAR
+    179	02A7  8C CB			     MOV BX, CS
+    180
+    181	02A9  FA			     CLI
+    182	02AA  26: A3 0154			 MOV ES:[55h*4],AX
+    183	02AE  26: 89 1E	0156			 MOV ES:[55h*4+2], BX
+    184	02B3  FB			     STI
+    185
+    186	02B4  BA 0167r			     MOV DX, OFFSET INSTALADO
+    187	02B7  B4 09			     MOV AH, 09h
+    188	02B9  CD 21			     INT 21h
+    189
+    190	02BB  BA 0236r			     MOV DX, OFFSET COMPROBADOR
+    191	02BE  CD 27			     INT 27h
+    192
+    193	02C0  C3			     RET
+    194	02C1				 INSTALADOR ENDP
+    195
+    196	02C1			     CODIGO ENDS
+    197				     END START
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:45	    Page 5
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "06/01/23"
+??FILENAME			  Text	 "cesar	  "
+??TIME				  Text	 "23:21:45"
+??VERSION			  Number 0200
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODIGO
+@FILENAME			  Text	 CESAR
+@WORDSIZE			  Text	 2
+BUC				  Near	 CODIGO:0220
+CESAR				  Far	 CODIGO:01E0
+COD				  Near	 CODIGO:020B
+CODIFICADOR			  Near	 CODIGO:01F7
+CODIFICAR			  Near	 CODIGO:01EA
+COMPROBADOR			  Near	 CODIGO:0236
+DECODIFICADOR			  Near	 CODIGO:0235
+DECODIFICAR			  Near	 CODIGO:01F0
+DESINSTALADO			  Byte	 CODIGO:0180
+DESINSTALADOR			  Near	 CODIGO:0278
+DESINSTALAR			  Near	 CODIGO:0267
+ERROR_FORMATO			  Near	 CODIGO:026D
+FIN				  Near	 CODIGO:0274
+FIN_CES				  Near	 CODIGO:01F6
+FORMATO_ERRONEO			  Byte	 CODIGO:019C
+INSTALADO			  Byte	 CODIGO:0167
+INSTALADOR			  Near	 CODIGO:029F
+INSTALAR			  Near	 CODIGO:0261
+MENSAJE_FINAL			  Byte	 CODIGO:0103
+START				  Near	 CODIGO:0100
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODIGO				  16  02C1 Para	  none
+

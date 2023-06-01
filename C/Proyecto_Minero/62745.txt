@@ -1,0 +1,105 @@
+Id: 0001
+Winner: 62745
+Target: 38722988
+Solution: 82781454 (validated)
+Votes: 3/3
+Wallets: 62743:1 62744:0 62745:1 
+
+Id: 0002
+Winner: 62744
+Target: 82781454
+Solution: 59403743 (validated)
+Votes: 3/3
+Wallets: 62743:1 62744:1 62745:1 
+
+Id: 0003
+Winner: 62743
+Target: 59403743
+Solution: 44638907 (validated)
+Votes: 3/3
+Wallets: 62743:2 62744:1 62745:1 
+
+Id: 0004
+Winner: 62745
+Target: 44638907
+Solution: 98780967 (validated)
+Votes: 3/3
+Wallets: 62743:2 62744:1 62745:2 
+
+Id: 0005
+Winner: 62743
+Target: 98780967
+Solution: 49574592 (validated)
+Votes: 3/3
+Wallets: 62743:3 62744:1 62745:2 
+
+Id: 0006
+Winner: 62744
+Target: 49574592
+Solution: 16391022 (validated)
+Votes: 3/3
+Wallets: 62743:3 62744:2 62745:2 
+
+Id: 0007
+Winner: 62743
+Target: 16391022
+Solution: 41194344 (validated)
+Votes: 3/3
+Wallets: 62743:4 62744:2 62745:2 
+
+Id: 0008
+Winner: 62744
+Target: 41194344
+Solution: 61259182 (validated)
+Votes: 3/3
+Wallets: 62743:4 62744:3 62745:2 
+
+Id: 0009
+Winner: 62745
+Target: 61259182
+Solution: 18852291 (validated)
+Votes: 3/3
+Wallets: 62743:4 62744:3 62745:3 
+
+Id: 0010
+Winner: 62743
+Target: 18852291
+Solution: 74660642 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:3 62745:3 
+
+Id: 0011
+Winner: 62744
+Target: 74660642
+Solution: 59894312 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:4 62745:3 
+
+Id: 0012
+Winner: 62744
+Target: 59894312
+Solution: 55978326 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:5 62745:3 
+
+Id: 0013
+Winner: 62744
+Target: 55978326
+Solution: 18633092 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:6 62745:3 
+
+Id: 0014
+Winner: 62744
+Target: 18633092
+Solution: 61031588 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:7 62745:3 
+
+Id: 0015
+Winner: 62745
+Target: 61031588
+Solution: 64519942 (validated)
+Votes: 3/3
+Wallets: 62743:5 62744:7 62745:4 
+

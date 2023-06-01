@@ -1,0 +1,47 @@
+DATOS SEGMENT
+    DB 100 DUP(0)
+    MENSAJE DB "POLIBIO", '$'
+
+DATOS ENDS
+
+
+PILA SEGMENT
+    DB 40h DUP(0)
+PILA ENDS
+
+
+EXTRA SEGMENT
+
+EXTRA ENDS
+
+
+
+CODIGO SEGMENT
+ASSUME CS:CODIGO, DS:DATOS, SS:PILA, ES:EXTRA
+
+    INICIO PROC
+
+        MOV AX, DATOS
+        MOV DS, AX
+        MOV AX, PILA
+        MOV SS, AX
+        MOV AX, EXTRA
+        MOV ES, AX
+
+        MOV SP, 64
+
+        MOV AL, 2
+        MOV DX, OFFSET MENSAJE
+        MOV AH, 11h
+        INT 55h
+
+        MOV AH, 09h
+        INT 21h
+
+        MOV AX, 4C00h
+        INT 21h
+
+    INICIO ENDP
+
+CODIGO ENDS
+END INICIO

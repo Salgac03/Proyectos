@@ -1,0 +1,49 @@
+Id: 0000
+Winner: 25581
+Target: 00000000
+Solution: 38722988 (validated)
+Votes: 1/1
+Wallets: 25581:1 
+
+Id: 0001
+Winner: 25581
+Target: 38722988
+Solution: 82781454 (validated)
+Votes: 1/1
+Wallets: 25581:2 
+
+Id: 0002
+Winner: 25581
+Target: 82781454
+Solution: 59403743 (validated)
+Votes: 1/1
+Wallets: 25581:3 
+
+Id: 0003
+Winner: 25581
+Target: 59403743
+Solution: 44638907 (validated)
+Votes: 1/1
+Wallets: 25581:4 
+
+Id: 0004
+Winner: 25581
+Target: 44638907
+Solution: 98780967 (validated)
+Votes: 1/1
+Wallets: 25581:5 
+
+Id: 0005
+Winner: 25581
+Target: 98780967
+Solution: 49574592 (validated)
+Votes: 1/1
+Wallets: 25581:6 
+
+Id: 0006
+Winner: 25581
+Target: 49574592
+Solution: 16391022 (validated)
+Votes: 1/1
+Wallets: 25581:7 
+

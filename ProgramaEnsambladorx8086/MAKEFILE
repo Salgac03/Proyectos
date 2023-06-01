@@ -1,0 +1,21 @@
+all: cesar.com comprob.exe
+
+cesar.com: cesar.obj
+    tlink /t cesar
+
+cesar.obj:
+    tasm /zi cesar.asm,,cesar.lst
+
+comprob.exe: comprob.obj
+    tlink /v comprob.obj
+
+comprob.obj:
+    tasm /zi comprob.asm,,comprob.lst
+
+
+clean: 
+    del *.obj 
+    del *.exe 
+    del *.map
+    del *.lst
+    del *.com

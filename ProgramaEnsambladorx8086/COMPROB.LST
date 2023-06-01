@@ -1,0 +1,79 @@
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:46	    Page 1
+comprob.asm
+
+
+
+      1	0000			     DATOS SEGMENT
+      2	0000  64*(00)			 DB 100	DUP(0)
+      3	0064  50 4F 4C 49 42 49	4F+	 MENSAJE DB "POLIBIO", '$'
+      4	      24
+      5
+      6	006C			     DATOS ENDS
+      7
+      8
+      9	0000			     PILA SEGMENT
+     10	0000  40*(00)			 DB 40h	DUP(0)
+     11	0040			     PILA ENDS
+     12
+     13
+     14	0000			     EXTRA SEGMENT
+     15
+     16	0000			     EXTRA ENDS
+     17
+     18
+     19
+     20	0000			     CODIGO SEGMENT
+     21				     ASSUME CS:CODIGO, DS:DATOS, SS:PILA, ES:EXTRA
+     22
+     23	0000				 INICIO	PROC
+     24
+     25	0000  B8 0000s			     MOV AX, DATOS
+     26	0003  8E D8			     MOV DS, AX
+     27	0005  B8 0000s			     MOV AX, PILA
+     28	0008  8E D0			     MOV SS, AX
+     29	000A  B8 0000s			     MOV AX, EXTRA
+     30	000D  8E C0			     MOV ES, AX
+     31
+     32	000F  BC 0040			     MOV SP, 64
+     33
+     34	0012  B0 02			     MOV AL, 2
+     35	0014  BA 0064r			     MOV DX, OFFSET MENSAJE
+     36	0017  B4 11			     MOV AH, 11h
+     37	0019  CD 55			     INT 55h
+     38
+     39	001B  B4 09			     MOV AH, 09h
+     40	001D  CD 21			     INT 21h
+     41
+     42	001F  B8 4C00			     MOV AX, 4C00h
+     43	0022  CD 21			     INT 21h
+     44
+     45	0024				 INICIO	ENDP
+     46
+     47	0024			     CODIGO ENDS
+     48				     END INICIO
+Turbo Assembler	 Version 2.0	    06/01/23 23:21:46	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "06/01/23"
+??FILENAME			  Text	 "comprob "
+??TIME				  Text	 "23:21:46"
+??VERSION			  Number 0200
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODIGO
+@FILENAME			  Text	 COMPROB
+@WORDSIZE			  Text	 2
+INICIO				  Near	 CODIGO:0000
+MENSAJE				  Byte	 DATOS:0064
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODIGO				  16  0024 Para	  none
+DATOS				  16  006C Para	  none
+EXTRA				  16  0000 Para	  none
+PILA				  16  0040 Para	  none
+
